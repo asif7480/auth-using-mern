@@ -8,29 +8,27 @@ const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const navigate = useNavigate()
-
   const { auth, setAuth } = useAuth()
 
-
+  const navigate = useNavigate()
+  
   const handleLogin = (e) => {
     e.preventDefault()
-
-    axios.post(`http://localhost:4000/api/auth/login`, {username, password})
+    axios.post(`http://localhost:4000/api/auth/login`, { username, password })
         .then( (response) => {
             console.log(response.data);
-            window.alert("login successfully")
+            alert("successfully login")
             setAuth({
                 ...auth,
                 user: response.data.user,
                 token: response.data.token
             })
             localStorage.setItem("auth", JSON.stringify(response.data))
-            
             navigate("/")
-        }) 
+        })
         .catch( (err) => {
             console.log(err);
+            alert("invalid credentials")
         })
   }
   return (
